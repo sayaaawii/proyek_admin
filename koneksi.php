@@ -4,6 +4,8 @@ $user = "root";
 $pass = "";
 $db   = "db_administrasi";
 
+$base_url = "http://daftar.tugas";
+
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 
 if (!$koneksi) {
