@@ -1,10 +1,10 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "db_administrasi";
+$host = "sql107.infinityfree.com";
+$user = "if0_41860864";
+$pass = "acrmFJuQXJF";
+$db   = "if0_41860864_db_administrasi";
 
-$base_url = "http://daftar.tugas/";
+$base_url = "daftartugas.infinityfree.me";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 
