@@ -1,12 +1,53 @@
+/* Warna Dasar & Background */
+body {
+    background: linear-gradient(135deg, #338191 0%, #ffffff 100%);
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container Grid Kartu di Dashboard */
 .task-grid {
     display: grid;
-    /* Ini memastikan di HP muncul 1 kolom, di laptop 3 kolom */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
     margin-top: 20px;
 }
 
-/* Tambahan agar tombol tidak menumpuk */
-.btn-group .btn {
-    margin-left: 2px;
+/* Desain Kartu (Dashboard) */
+.task-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-top: 6px solid #338191;
+    transition: 0.3s ease;
+}
+
+.task-card:hover { transform: translateY(-5px); }
+
+/* Warna Garis Berdasarkan Kesulitan */
+.border-sulit { border-top-color: #dc3545; }
+.border-sedang { border-top-color: #ffc107; }
+.border-mudah { border-top-color: #0dcaf0; }
+
+/* Judul & Teks di Dalam Kartu */
+.student-name { color: #203746; font-size: 1.25rem; font-weight: bold; margin-bottom: 5px; }
+.task-title { color: #6c757d; font-style: italic; margin-bottom: 15px; }
+
+/* Login & Edit Card (Warna Kalem) */
+.card-kalem {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.header-kalem {
+    background: #338191; /* Biru toska kalem awal */
+    color: white;
+    border-radius: 15px 15px 0 0;
+    padding: 15px;
+    text-align: center;
 }
