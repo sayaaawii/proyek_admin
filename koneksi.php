@@ -4,7 +4,7 @@ $user = "if0_41860864";
 $pass = "acrmFJuQXJF";
 $db   = "if0_41860864_db_administrasi";
 
-$base_url = "http://daftartugas.infinityfree.me/";
+$base_url = "//daftartugas.infinityfree.me/";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 

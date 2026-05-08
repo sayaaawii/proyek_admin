@@ -8,15 +8,17 @@ include 'koneksi.php';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Tugas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo $base_url; ?>style.css">
+    <link rel="stylesheet" href="<?php echo $base_url; ?>style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
-<div class="container">
+<div class="container mt-4">
     <div class="card card-kalem mb-4 overflow-hidden">
         <div class="header-kalem d-flex justify-content-between align-items-center px-4">
             <h4 class="mb-0">Daftar Tugas Siswa</h4>
@@ -31,27 +33,32 @@ include 'koneksi.php';
         <?php
         $query = mysqli_query($koneksi, "SELECT * FROM daftar_tugas ORDER BY id DESC");
         while($data = mysqli_fetch_array($query)) {
-            $warna = ($data['kesulitan'] == 'Sulit') ? 'border-sulit' : (($data['kesulitan'] == 'Sedang') ? 'border-sedang' : 'border-mudah');
+            // Penentuan class border berdasarkan kesulitan
+            $warna = '';
+            if($data['kesulitan'] == 'Sulit') { $warna = 'border-sulit'; }
+            elseif($data['kesulitan'] == 'Sedang') { $warna = 'border-sedang'; }
+            else { $warna = 'border-mudah'; }
         ?>
         <div class="task-card <?php echo $warna; ?>">
-            <div class="d-flex justify-content-between">
-                <h5 class="student-name"><?php echo $data['nama_siswa']; ?></h5>
-                <span class="badge <?php echo $data['status'] == 'Done' ? 'bg-success' : 'bg-secondary'; ?>">
-                    <?php echo $data['status']; ?>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="student-name mb-0"><?php echo $data['nama_siswa']; ?></h5>
+                <span class="badge <?php echo ($data['status'] == 'Done') ? 'bg-success' : 'bg-secondary'; ?>">
+                    <?php echo $data['status'] ? $data['status'] : 'Pending'; ?>
                 </span>
             </div>
-            <p class="task-title"><?php echo $data['judul_tugas']; ?></p>
+            
+            <p class="task-title mb-1"><?php echo $data['judul_tugas']; ?></p>
             <div class="small text-muted mb-3">Deadline: <b><?php echo $data['deadline']; ?></b></div>
             
             <div class="d-flex justify-content-between align-items-center border-top pt-3">
                 <span class="small fw-bold text-muted"><?php echo $data['kesulitan']; ?></span>
                 <div class="btn-group">
-                    <?php if($data['status'] == 'Pending') : ?>
-                        <a href="selesai.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-outline-success fw-bold">Selesai</a>
+                    <?php if($data['status'] != 'Done') : ?>
+                        <a href="selesai.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-outline-success fw-bold">Done</a>
                     <?php endif; ?>
 
                     <a href="edit.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-warning fw-bold">Edit</a>
-                    <a href="hapus.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-danger fw-bold" onclick="return confirm('Hapus?')">Hapus</a>
+                    <a href="hapus.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-danger fw-bold" onclick="return confirm('Hapus tugas ini?')">Hapus</a>
                 </div>
             </div>
         </div>
