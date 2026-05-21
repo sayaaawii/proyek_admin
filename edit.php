@@ -29,7 +29,7 @@ $data = mysqli_fetch_array($query);
                     <h5 class="mb-0">Edit Data Tugas</h5>
                 </div>
                 <div class="card-body p-4">
-                    <form action="" method="POST">
+                    <form action="edit.php?id=<?php echo $id; ?>" method="POST">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nama Siswa</label>
                             <input type="text" name="nama_siswa" class="form-control" value="<?php echo $data['nama_siswa']; ?>" required>
@@ -49,7 +49,7 @@ $data = mysqli_fetch_array($query);
                         <div class="mb-3">
                             <label class="form-label fw-bold">Deadline</label>
                             <input type="date" name="deadline" class="form-control" value="<?php echo $data['deadline']; ?>" required>
-                            <small class="text-muted">Format: Tgl/Bln/Thn</small>
+                            <small class="text-muted">Format: Bln/Tgl/Thn</small>
                         </div>
                         
                         <button type="submit" name="update" class="btn btn-warning w-100 fw-bold py-2">UPDATE DATA</button>
@@ -72,7 +72,13 @@ $data = mysqli_fetch_array($query);
                             WHERE id='$id'");
 
                         if ($update) {
-                            echo "<script>alert('Data Berhasil Diperbarui!'); window.location='index.php';</script>";
+                            // KUNCI 2: Bersihkan URL murni dulu ke '/', baru gembok layar pakai Alert sukses!
+                            echo "<script>
+                                if (window.history.replaceState) {
+                                    window.history.replaceState(null, null, '/');
+                                }
+                                alert('Data Berhasil Diperbarui!'); window.location='index.php';
+                            </script>";
                         } else {
                             echo "<div class='alert alert-danger mt-3'>Gagal Update: ".mysqli_error($koneksi)."</div>";
                         }
@@ -83,5 +89,12 @@ $data = mysqli_fetch_array($query);
         </div>
     </div>
 </div>
+
+<script>
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, '/');
+}
+</script>
+
 </body>
 </html>

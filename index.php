@@ -30,7 +30,7 @@ include 'koneksi.php';
 
     <div class="row mb-4">
         <div class="col-12">
-            <form action="" method="GET" class="d-flex gap-2">
+            <form action="" method="GET" class="d-flex gap-2" onsubmit="bersihkanURLSetelahSubmit()">
                 <input type="text" name="cari" class="form-control" placeholder="Cari nama siswa atau mapel..." value="<?php echo isset($_GET['cari']) ? $_GET['cari'] : ''; ?>">
                 <button type="submit" class="btn btn-primary fw-bold text-white">Cari</button>
                 <?php if(isset($_GET['cari'])): ?>
@@ -71,18 +71,35 @@ include 'koneksi.php';
             <div class="small text-muted mb-3">Deadline: <b><?php echo $data['deadline']; ?></b></div>
             
             <div class="d-flex justify-content-between align-items-center border-top pt-3">
-    			<span class="badge bg-info text-dark"><?php echo $data['kesulitan']; ?></span>
-    				<div class="btn-group gap-1">
-        				<?php if($data['status'] == 'Pending') : ?>
-           					<a href="selesai.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-outline-success fw-bold">Selesai</a>
-        				<?php endif; ?>
-        					<a href="edit.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-warning fw-bold">Edit</a>
-       						<a href="hapus.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-danger fw-bold" onclick="return confirm('Hapus?')">Hapus</a>
-                    </div>
+                <span class="badge bg-info text-dark"><?php echo $data['kesulitan']; ?></span>
+                <div class="btn-group gap-1">
+                    <?php if($data['status'] == 'Pending') : ?>
+                        <a href="selesai.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-outline-success fw-bold">Selesai</a>
+                    <?php endif; ?>
+                    <a href="edit.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-warning fw-bold">Edit</a>
+                    <a href="hapus.php?id=<?php echo $data['id']; ?>" class="btn btn-sm btn-danger fw-bold" onclick="return confirm('Hapus?')">Hapus</a>
                 </div>
+            </div>
         </div>
         <?php } ?>
     </div>
 </div>
+
+<script>
+// Langsung bersihkan saat halaman pertama kali dibuka/di-refresh
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, '/');
+}
+
+// Bersihkan kilat saat tombol Cari dipencet
+function bersihkanURLSetelahSubmit() {
+    setTimeout(function() {
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, '/');
+        }
+    }, 50);
+}
+</script>
+
 </body>
 </html>

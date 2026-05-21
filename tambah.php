@@ -24,7 +24,7 @@ include 'koneksi.php';
                     <h5 class="mb-0">Tambah Tugas Baru</h5>
                 </div>
                 <div class="card-body p-4">
-                    <form action="" method="POST">
+                    <form action="tambah.php" method="POST">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nama Siswa</label>
                             <input type="text" name="nama_siswa" class="form-control" placeholder="Nama lengkap siswa..." required>
@@ -56,10 +56,17 @@ include 'koneksi.php';
                         $kesulitan = $_POST['kesulitan'];
                         $deadline = $_POST['deadline'];
 
-                        $query = mysqli_query($koneksi, "INSERT INTO daftar_tugas (nama_siswa, judul_tugas, kesulitan, deadline, status) VALUES ('$nama', '$mapel', '$kesulitan', 								'$deadline', 'Pending')");
+                        $query = mysqli_query($koneksi, "INSERT INTO daftar_tugas (nama_siswa, judul_tugas, kesulitan, deadline, status) VALUES ('$nama', '$mapel', '$kesulitan', '$deadline', 'Pending')");
 
                         if ($query) {
-                            echo "<script>alert('Berhasil Tambah!'); window.location='index.php';</script>";
+                            // KUNCI 2: Bersihkan URL murni dulu ke '/', baru gembok layar pakai Alert!
+                            echo "<script>
+                                if (window.history.replaceState) {
+                                    window.history.replaceState(null, null, '/');
+                                }
+                                alert('Berhasil Tambah!'); 
+                                window.location='index.php';
+                            </script>";
                         } else {
                             echo "<div class='alert alert-danger mt-3'>Gagal: ".mysqli_error($koneksi)."</div>";
                         }
@@ -70,5 +77,12 @@ include 'koneksi.php';
         </div>
     </div>
 </div>
+
+<script>
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, '/');
+}
+</script>
+
 </body>
 </html>

@@ -5,6 +5,7 @@ include 'koneksi.php';
 // Jika sudah login, langsung lempar ke index
 if (isset($_SESSION['status']) && $_SESSION['status'] == "login") {
     header("location:index.php");
+    exit;
 }
 
 if (isset($_POST['login'])) {
@@ -18,6 +19,7 @@ if (isset($_POST['login'])) {
         $_SESSION['username'] = $username;
         $_SESSION['status'] = "login";
         header("location:index.php");
+        exit;
     } else {
         $error = "Username atau Password salah!";
     }
@@ -27,10 +29,10 @@ if (isset($_POST['login'])) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Administrasi Tugas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.1"">
+    <link rel="stylesheet" href="style.css?v=2.1">
     <style>
         /* Tambahan style khusus agar warna tetap kalem */
         .card-header-kalem {
@@ -66,7 +68,7 @@ if (isset($_POST['login'])) {
                             <div class="alert alert-danger py-2" style="font-size: 14px;"><?= $error; ?></div>
                         <?php endif; ?>
                         
-                        <form action="" method="POST">
+                        <form action="login.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
                                 <input type="text" name="username" class="form-control" placeholder="Masukkan Username" required>
@@ -81,6 +83,14 @@ if (isset($_POST['login'])) {
                 </div>
             </div>
         </div>
-    </div>
+    </div>                                                                                                                
+
+<script>
+// KUNCI 2: URL diganti setelah form siap diproses, jadi tidak memutus jalur data PHP
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, '/');
+}
+</script>
+
 </body>
 </html>
